@@ -1,38 +1,256 @@
+html {
+  background-color: #e8f3e1;
+}
+
 .App {
   text-align: center;
 }
 
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
+.timerInput {
+  margin-bottom: 5%;
 }
 
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
+.clockSim {
+  position: relative;
+  /* border: solid thick #e0cbb3; */
+  border-radius: 2em;
+  padding: 4%;
+  background: #eadfb5;
 }
 
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
+.clockSim:before {
+  position: absolute;
+  right: 5vmin;
+  bottom: -4vmin;
+  left: 5vmin;
+  display: block;
+  height: 4vmin;
+  background: #eadfb5;
+  border-top: .25em solid #e8f3e1;
+  content: "";
+  transform: perspective(200px) rotateX(10deg);
+}
+
+.clockSim:after {
+    position: absolute;
+    bottom: -1em;
+    z-index: -1;
+    display: block;
+    width: 100%;
+    height: 100%;
+    background: #dae4d4;
+    border-radius: 2em;
+    content: '';
+    transform: perspective(35em) rotateX(60deg) skew(62deg);
+    transform-origin: bottom right;
+}
+
+.flipClock {
+  display: -webkit-box;
   display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
+  justify-content: space-between;
+  width: 100%;
+  margin-bottom: 5%;
 }
 
-.App-link {
-  color: #61dafb;
+.flipUnitContainer {
+  display: block;
+  position: relative;
+  width: 45%;
+  height: 5em;
+  -webkit-perspective-origin: 50% 50%;
+          perspective-origin: 50% 50%;
+  -webkit-perspective: 300px;
+          perspective: 300px;
+  background-color: white;
+  border-radius: 3px;
+  box-shadow: 0px 10px 10px -10px grey;
 }
 
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
+.upperCard, .lowerCard {
+  display: -webkit-box;
+  display: flex;
+  position: relative;
+  -webkit-box-pack: center;
+          justify-content: center;
+  width: 100%;
+  height: 50%;
+  overflow: hidden;
+  border: 1px solid whitesmoke;
+}
+
+.upperCard span, .lowerCard span {
+  font-size: 3em;
+  font-family: "Droid Sans Mono", monospace;
+  font-weight: lighter;
+  color: #333333;
+}
+
+.upperCard {
+  -webkit-box-align: end;
+          align-items: flex-end;
+  border-bottom: 0.5px solid whitesmoke;
+  border-top-left-radius: 3px;
+  border-top-right-radius: 3px;
+}
+
+.upperCard span {
+  -webkit-transform: translateY(50%);
+          transform: translateY(50%);
+}
+
+.lowerCard {
+  -webkit-box-align: start;
+          align-items: flex-start;
+  border-top: 0.5px solid whitesmoke;
+  border-bottom-left-radius: 3px;
+  border-bottom-right-radius: 3px;
+}
+.lowerCard span {
+  -webkit-transform: translateY(-50%);
+          transform: translateY(-50%);
+}
+
+.flipCard {
+  display: -webkit-box;
+  display: flex;
+  -webkit-box-pack: center;
+          justify-content: center;
+  position: absolute;
+  left: 0;
+  width: 100%;
+  height: 50%;
+  overflow: hidden;
+  -webkit-backface-visibility: hidden;
+          backface-visibility: hidden;
+}
+
+.flipCard span {
+  font-family: "Droid Sans Mono", monospace;
+  font-size: 3em;
+  font-weight: lighter;
+  color: #333333;
+}
+
+.flipCard.unfold {
+  top: 50%;
+  -webkit-box-align: start;
+          align-items: flex-start;
+  -webkit-transform-origin: 50% 0%;
+          transform-origin: 50% 0%;
+  -webkit-transform: rotateX(180deg);
+          transform: rotateX(180deg);
+  background-color: white;
+  border-bottom-left-radius: 3px;
+  border-bottom-right-radius: 3px;
+  border: 0.5px solid whitesmoke;
+  border-top: 0.5px solid whitesmoke;
+}
+
+.flipCard.unfold span {
+  -webkit-transform: translateY(-50%);
+          transform: translateY(-50%);
+}
+
+.flipCard.fold {
+  top: 0%;
+  -webkit-box-align: end;
+          align-items: flex-end;
+  -webkit-transform-origin: 50% 100%;
+          transform-origin: 50% 100%;
+  -webkit-transform: rotateX(0deg);
+          transform: rotateX(0deg);
+  background-color: white;
+  border-top-left-radius: 3px;
+  border-top-right-radius: 3px;
+  border: 0.5px solid whitesmoke;
+  border-bottom: 0.5px solid whitesmoke;
+}
+
+.flipCard.fold span {
+  -webkit-transform: translateY(50%);
+          transform: translateY(50%);
+}
+
+.fold {
+  -webkit-animation: fold 0.6s cubic-bezier(0.455, 0.03, 0.515, 0.955) 0s 1 normal forwards;
+          animation: fold 0.6s cubic-bezier(0.455, 0.03, 0.515, 0.955) 0s 1 normal forwards;
+  -webkit-transform-style: preserve-3d;
+          transform-style: preserve-3d;
+}
+
+.unfold {
+  -webkit-animation: unfold 0.6s cubic-bezier(0.455, 0.03, 0.515, 0.955) 0s 1 normal forwards;
+          animation: unfold 0.6s cubic-bezier(0.455, 0.03, 0.515, 0.955) 0s 1 normal forwards;
+  -webkit-transform-style: preserve-3d;
+          transform-style: preserve-3d;
+}
+
+@-webkit-keyframes fold {
+  0% {
+    -webkit-transform: rotateX(0deg);
+            transform: rotateX(0deg);
   }
-  to {
-    transform: rotate(360deg);
+  100% {
+    -webkit-transform: rotateX(-180deg);
+            transform: rotateX(-180deg);
   }
+}
+
+@keyframes fold {
+  0% {
+    -webkit-transform: rotateX(0deg);
+            transform: rotateX(0deg);
+  }
+  100% {
+    -webkit-transform: rotateX(-180deg);
+            transform: rotateX(-180deg);
+  }
+}
+@-webkit-keyframes unfold {
+  0% {
+    -webkit-transform: rotateX(180deg);
+            transform: rotateX(180deg);
+  }
+  100% {
+    -webkit-transform: rotateX(0deg);
+            transform: rotateX(0deg);
+  }
+}
+@keyframes unfold {
+  0% {
+    -webkit-transform: rotateX(180deg);
+            transform: rotateX(180deg);
+  }
+  100% {
+    -webkit-transform: rotateX(0deg);
+            transform: rotateX(0deg);
+  }
+}
+
+.focusSpeed {
+  background-color: #6f7282 !important;
+}
+
+.timeColumn {
+  font-size: 3em;
+}
+
+.countdownAlert {
+  color: green;
+}
+
+.blink {
+  animation:blinkingText .5s infinite;
+}
+@keyframes blinkingText{
+  0%{     color: red;    }
+  49%{    color: red; }
+  60%{    color: transparent; }
+  99%{    color:transparent;  }
+  100%{   color: red;    }
+}
+
+.timesUp {
+  color: red;
 }
