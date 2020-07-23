@@ -2,7 +2,7 @@ Countdown Timer using Create-React-app
 
 The Following are images of the process at different stages
 
-Project is active here [Countdown] (http://react-countdown-timer.surge.sh)
+Project is active here [Countdown](http://react-countdown-timer.surge.sh)
 
 On page load:
 <p align='center'>
